@@ -1,0 +1,67 @@
+Microsoft (R) Build Engine version 16.3.0+0f4c62fea for .NET Core
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+  Restore completed in 48.62 ms for C:\Penguin\Repositories\Penguin.DependencyInjection.Abstractions\Penguin.DependencyInjection.Abstractions.Local.csproj.
+  Restore completed in 48.77 ms for C:\Penguin\Repositories\Penguin.Debugging\Penguin.Debugging.Local.csproj.
+  Restore completed in 48.59 ms for C:\Penguin\Repositories\Penguin.Cms.Files.Repositories\Penguin.Cms.Files.Repositories.Local.csproj.
+  Restore completed in 48.55 ms for C:\Penguin\Repositories\Penguin.Configuration.Abstractions\Penguin.Configuration.Abstractions.Local.csproj.
+  Restore completed in 48.62 ms for C:\Penguin\Repositories\Penguin.Cms.Repositories\Penguin.Cms.Repositories.Local.csproj.
+  Restore completed in 49.11 ms for C:\Penguin\Repositories\Penguin.Cms.Web.Files\Penguin.Cms.Web.Files.Local.csproj.
+  Restore completed in 48.66 ms for C:\Penguin\Repositories\Penguin.Cms.Entities\Penguin.Cms.Entities.Local.csproj.
+  Restore completed in 48.6 ms for C:\Penguin\Repositories\Penguin.Cms.Files\Penguin.Cms.Files.Local.csproj.
+  Restore completed in 1.25 ms for C:\Penguin\Repositories\Penguin.Extensions.Exceptions\Penguin.Extensions.Exceptions.Local.csproj.
+  Restore completed in 1.25 ms for C:\Penguin\Repositories\Penguin.Entities.Abstractions\Penguin.Entities.Abstractions.Local.csproj.
+  Restore completed in 1.37 ms for C:\Penguin\Repositories\Penguin.Email.Templating.Abstractions\Penguin.Email.Templating.Abstractions.Local.csproj.
+  Restore completed in 1.78 ms for C:\Penguin\Repositories\Penguin.Email.Abstractions\Penguin.Email.Abstractions.Local.csproj.
+  Restore completed in 1.97 ms for C:\Penguin\Repositories\Penguin.Files.Abstractions\Penguin.Files.Abstractions.Local.csproj.
+  Restore completed in 2.21 ms for C:\Penguin\Repositories\Penguin.Files\Penguin.Files.Local.csproj.
+  Restore completed in 1.04 ms for C:\Penguin\Repositories\Penguin.Messaging.Abstractions\Penguin.Messaging.Abstractions.Local.csproj.
+  Restore completed in 1.47 ms for C:\Penguin\Repositories\Penguin.Extensions.String\Penguin.Extensions.String.Local.csproj.
+  Restore completed in 13.62 ms for C:\Penguin\Repositories\Penguin.Messaging.Application\Penguin.Messaging.Application.Local.csproj.
+  Restore completed in 13.13 ms for C:\Penguin\Repositories\Penguin.Messaging.Core\Penguin.Messaging.Core.Local.csproj.
+  Restore completed in 1.55 ms for C:\Penguin\Repositories\Penguin.Reflection.Extensions\Penguin.Reflection.Extensions.Local.csproj.
+  Restore completed in 15.5 ms for C:\Penguin\Repositories\Penguin.Messaging.Persistence\Penguin.Messaging.Persistence.Local.csproj.
+  Restore completed in 2.16 ms for C:\Penguin\Repositories\Penguin.Persistence.Abstractions\Penguin.Persistence.Abstractions.Local.csproj.
+  Restore completed in 1.19 ms for C:\Penguin\Repositories\Penguin.Security.Abstractions\Penguin.Security.Abstractions.Local.csproj.
+  Restore completed in 1.74 ms for C:\Penguin\Repositories\Penguin.Templating.Abstractions\Penguin.Templating.Abstractions.Local.csproj.
+  Restore completed in 1.01 ms for C:\Penguin\Repositories\Penguin.Reflection.Abstractions\Penguin.Reflection.Abstractions.Local.csproj.
+  Restore completed in 2.06 ms for C:\Penguin\Repositories\Penguin.Reflection\Penguin.Reflection.Local.csproj.
+  Restore completed in 3.49 ms for C:\Penguin\Repositories\Penguin.Persistence.Repositories\Penguin.Persistence.Repositories.Local.csproj.
+  Restore completed in 1.19 ms for C:\Penguin\Repositories\Penguin.Web.Data\Penguin.Web.Data.Local.csproj.
+  Restore completed in 1.43 ms for C:\Penguin\Repositories\Penguin.Web.Abstractions\Penguin.Web.Abstractions.Local.csproj.
+  Penguin.Extensions.String.Local -> C:\Penguin\Repositories\Penguin.Extensions.String\bin\Release\netstandard2.0\Penguin.Extensions.String.Local.dll
+  Penguin.Entities.Abstractions.Local -> C:\Penguin\Repositories\Penguin.Entities.Abstractions\bin\Release\netstandard2.0\Penguin.Entities.Abstractions.Local.dll
+  Penguin.Files.Abstractions.Local -> C:\Penguin\Repositories\Penguin.Files.Abstractions\bin\Release\netstandard2.0\Penguin.Files.Abstractions.Local.dll
+  Penguin.Reflection.Abstractions.Local -> C:\Penguin\Repositories\Penguin.Reflection.Abstractions\bin\Release\netstandard2.0\Penguin.Reflection.Abstractions.Local.dll
+  Penguin.Messaging.Abstractions.Local -> C:\Penguin\Repositories\Penguin.Messaging.Abstractions\bin\Release\netstandard2.0\Penguin.Messaging.Abstractions.Local.dll
+  Penguin.Security.Abstractions.Local -> C:\Penguin\Repositories\Penguin.Security.Abstractions\bin\Release\netstandard2.0\Penguin.Security.Abstractions.Local.dll
+  Penguin.Extensions.Exceptions.Local -> C:\Penguin\Repositories\Penguin.Extensions.Exceptions\bin\Release\netstandard2.0\Penguin.Extensions.Exceptions.Local.dll
+  Penguin.DependencyInjection.Abstractions.Local -> C:\Penguin\Repositories\Penguin.DependencyInjection.Abstractions\bin\Release\netstandard2.0\Penguin.DependencyInjection.Abstractions.Local.dll
+  Penguin.Web.Abstractions.Local -> C:\Penguin\Repositories\Penguin.Web.Abstractions\bin\Release\netstandard2.0\Penguin.Web.Abstractions.Local.dll
+  Penguin.Email.Abstractions.Local -> C:\Penguin\Repositories\Penguin.Email.Abstractions\bin\Release\netstandard2.0\Penguin.Email.Abstractions.Local.dll
+  Penguin.Templating.Abstractions.Local -> C:\Penguin\Repositories\Penguin.Templating.Abstractions\bin\Release\netstandard2.0\Penguin.Templating.Abstractions.Local.dll
+  Penguin.Web.Data.Local -> C:\Penguin\Repositories\Penguin.Web.Data\bin\Release\netstandard2.0\Penguin.Web.Data.Local.dll
+  Penguin.Reflection.Extensions.Local -> C:\Penguin\Repositories\Penguin.Reflection.Extensions\bin\Release\netstandard2.0\Penguin.Reflection.Extensions.Local.dll
+  Penguin.Configuration.Abstractions.Local -> C:\Penguin\Repositories\Penguin.Configuration.Abstractions\bin\Release\netstandard2.0\Penguin.Configuration.Abstractions.Local.dll
+  Penguin.Messaging.Persistence.Local -> C:\Penguin\Repositories\Penguin.Messaging.Persistence\bin\Release\netstandard2.0\Penguin.Messaging.Persistence.Local.dll
+  Penguin.Debugging.Local -> C:\Penguin\Repositories\Penguin.Debugging\bin\Release\netstandard2.0\Penguin.Debugging.Local.dll
+  Penguin.Reflection.Local -> C:\Penguin\Repositories\Penguin.Reflection\bin\Release\netstandard2.0\Penguin.Reflection.Local.dll
+  Penguin.Messaging.Core.Local -> C:\Penguin\Repositories\Penguin.Messaging.Core\bin\Release\netstandard2.0\Penguin.Messaging.Core.Local.dll
+  Penguin.Files.Local -> C:\Penguin\Repositories\Penguin.Files\bin\Release\netstandard2.0\Penguin.Files.Local.dll
+  Penguin.Persistence.Abstractions.Local -> C:\Penguin\Repositories\Penguin.Persistence.Abstractions\bin\Release\netstandard2.0\Penguin.Persistence.Abstractions.Local.dll
+  Penguin.Reflection.Local -> C:\Penguin\Repositories\Penguin.Reflection\bin\Release\net48\Penguin.Reflection.Local.dll
+  Penguin.Email.Templating.Abstractions.Local -> C:\Penguin\Repositories\Penguin.Email.Templating.Abstractions\bin\Release\netstandard2.0\Penguin.Email.Templating.Abstractions.Local.dll
+  Penguin.Persistence.Repositories.Local -> C:\Penguin\Repositories\Penguin.Persistence.Repositories\bin\Release\netstandard2.0\Penguin.Persistence.Repositories.Local.dll
+  Penguin.Cms.Entities.Local -> C:\Penguin\Repositories\Penguin.Cms.Entities\bin\Release\netstandard2.0\Penguin.Cms.Entities.Local.dll
+  Penguin.Messaging.Application.Local -> C:\Penguin\Repositories\Penguin.Messaging.Application\bin\Release\netstandard2.0\Penguin.Messaging.Application.Local.dll
+  Penguin.Cms.Files.Local -> C:\Penguin\Repositories\Penguin.Cms.Files\bin\Release\netstandard2.0\Penguin.Cms.Files.Local.dll
+  Penguin.Cms.Repositories.Local -> C:\Penguin\Repositories\Penguin.Cms.Repositories\bin\Release\netstandard2.0\Penguin.Cms.Repositories.Local.dll
+  Penguin.Cms.Files.Repositories.Local -> C:\Penguin\Repositories\Penguin.Cms.Files.Repositories\bin\Release\netstandard2.0\Penguin.Cms.Files.Repositories.Local.dll
+  Penguin.Cms.Web.Files.Local -> C:\Penguin\Repositories\Penguin.Cms.Web.Files\bin\Release\netstandard2.0\Penguin.Cms.Web.Files.Local.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:04.14
+
