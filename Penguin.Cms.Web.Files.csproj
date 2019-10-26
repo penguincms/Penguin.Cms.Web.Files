@@ -9,12 +9,12 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.0.0" />
-    <PackageReference Include="Penguin.Cms.Files" Version="2.0.2" />
-    <PackageReference Include="Penguin.Cms.Files.Repositories" Version="1.0.0" />
     <PackageReference Include="Penguin.Email.Templating.Abstractions" Version="1.0.0" />
     <PackageReference Include="Penguin.Messaging.Application" Version="2.1.0" />
     <PackageReference Include="Penguin.Messaging.Persistence" Version="2.2.4" />
     <PackageReference Include="Penguin.Web.Abstractions" Version="1.0.0" />
     <PackageReference Include="Penguin.Web.Data" Version="2.0.0" />
+    <PackageReference Include="Penguin.Cms.Files" Version="2.0.2-63707651487" />
+    <PackageReference Include="Penguin.Cms.Files.Repositories" Version="1.0.0-63707652289" />
   </ItemGroup>
 </Project>
