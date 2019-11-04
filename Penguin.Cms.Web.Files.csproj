@@ -14,7 +14,7 @@
     <PackageReference Include="Penguin.Email.Templating.Abstractions" Version="1.0.1-T9M3AAF" />
     <PackageReference Include="Penguin.Messaging.Application" Version="2.1.1-T9M3AAF" />
     <PackageReference Include="Penguin.Web.Abstractions" Version="1.0.1-T9M3AAF" />
-    <PackageReference Include="Penguin.Web.Data" Version="2.0.1-T9M3AAF" />
     <PackageReference Include="Penguin.Cms.Files.Repositories" Version="1.0.1-T9M5XDM" />
+    <PackageReference Include="Penguin.Web.Data" Version="2.0.1-T9MC5O3" />
   </ItemGroup>
 </Project>
