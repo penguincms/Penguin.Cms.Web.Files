@@ -22,7 +22,7 @@ namespace Penguin.Web.Errors.Middleware
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2007:Consider calling ConfigureAwait on the awaited task", Justification = "<Pending>")]
     public class DatabaseFileServer : IPenguinMiddleware, IMessageHandler
     {
-        public static ConcurrentDictionary<string, bool> ExistingFiles;
+        static ConcurrentDictionary<string, bool> ExistingFiles;
 
         private readonly RequestDelegate _next;
 
@@ -49,17 +49,19 @@ namespace Penguin.Web.Errors.Middleware
             }
         }
 
+        const long ChunkSize = 5_000_000;
 
         private static async Task RangeDownload(string fullpath, HttpContext context)
         {
-            long size, start, end, length, fp = 0;
+            long size, start, end, length;
             using (StreamReader reader = new StreamReader(fullpath))
             {
 
                 size = reader.BaseStream.Length;
                 start = 0;
-                end = size - 1;
-                length = size;
+                end = Math.Min(size - 1, ChunkSize);
+                length = end - start + 1;
+
                 // Now that we've gotten so far without errors we send the accept range header
                 /* At the moment we only support single ranges.
                  * Multiple ranges requires some more work to ensure it works correctly
@@ -108,13 +110,20 @@ namespace Penguin.Web.Errors.Middleware
                         arr_split = range.Split('-');
                         anotherStart = Convert.ToInt64(arr_split[0]);
                         long temp = 0;
-                        anotherEnd = (arr_split.Length > 1 && Int64.TryParse(arr_split[1].ToString(), out temp)) ? Convert.ToInt64(arr_split[1]) : size;
+
+                        if (!string.IsNullOrWhiteSpace(arr_split[1]))
+                        {
+                            anotherEnd = (arr_split.Length > 1 && Int64.TryParse(arr_split[1], out temp)) ? Convert.ToInt64(arr_split[1]) : end;
+                        } else
+                        {
+                            anotherEnd = Math.Min(anotherStart + ChunkSize, size);
+                        }
                     }
                     /* Check the range and make sure it's treated according to the specs.
                      * http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html
                      */
                     // End bytes can not be larger than $end.
-                    anotherEnd = (anotherEnd > end) ? end : anotherEnd;
+                    anotherEnd = (anotherEnd > size - 1) ? size - 1 : anotherEnd;
                     // Validate the requested range and return an error if it's not correct.
                     if (anotherStart > anotherEnd || anotherStart > size - 1 || anotherEnd >= size)
                     {
@@ -127,7 +136,7 @@ namespace Penguin.Web.Errors.Middleware
                     end = anotherEnd;
 
                     length = end - start + 1; // Calculate new content length
-                    fp = reader.BaseStream.Seek(start, SeekOrigin.Begin);
+                    long fp = reader.BaseStream.Seek(start, SeekOrigin.Begin);
                     context.Response.StatusCode = 206;
                 }
             }
