@@ -171,7 +171,7 @@ namespace Penguin.Web.Errors.Middleware
             bool Exists = true;
             DatabaseFile found = null;
 
-            if (ExistingFiles != null && !ExistingFiles.TryGetValue(filePath, out Exists))
+            if (found is null && ExistingFiles != null && !ExistingFiles.TryGetValue(filePath, out Exists))
             {
                 found = databaseFileRepository.GetByFullName(filePath);
 
@@ -179,6 +179,8 @@ namespace Penguin.Web.Errors.Middleware
 
                 ExistingFiles.TryAdd(filePath, Exists);
             }
+
+
 
             if (Exists && found is null)
             {
