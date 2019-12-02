@@ -49,7 +49,7 @@ namespace Penguin.Web.Errors.Middleware
             }
         }
 
-        const long ChunkSize = 5_000_000;
+        const long ChunkSize = 1_000_000;
 
         private static async Task RangeDownload(string fullpath, HttpContext context)
         {
