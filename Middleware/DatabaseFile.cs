@@ -20,9 +20,12 @@ namespace Penguin.Web.Errors.Middleware
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1307:Specify StringComparison", Justification = "<Pending>")]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1305:Specify IFormatProvider", Justification = "<Pending>")]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2007:Consider calling ConfigureAwait on the awaited task", Justification = "<Pending>")]
+#pragma warning disable CS0618 // Type or member is obsolete
     public class DatabaseFileServer : IPenguinMiddleware, IMessageHandler
+#pragma warning restore CS0618 // Type or member is obsolete
     {
-        static ConcurrentDictionary<string, bool> ExistingFiles;
+        private const long CHUNK_SIZE = 1_000_000;
+        private static ConcurrentDictionary<string, bool> ExistingFiles;
 
         private readonly RequestDelegate _next;
 
@@ -32,6 +35,8 @@ namespace Penguin.Web.Errors.Middleware
             this._next = next;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA1801:Review unused parameters", Justification = "<Pending>")]
         public static void AcceptMessage(Penguin.Messaging.Application.Messages.Startup message)
         {
             ExistingFiles = new ConcurrentDictionary<string, bool>();
@@ -39,6 +44,11 @@ namespace Penguin.Web.Errors.Middleware
 
         public static void AcceptMessage(Updating<DatabaseFile> message)
         {
+            if (message is null)
+            {
+                throw new ArgumentNullException(nameof(message));
+            }
+
             if (ExistingFiles.ContainsKey(message.Target.FilePath))
             {
                 ExistingFiles[message.Target.FilePath] = !message.Target.IsDeleted;
@@ -49,17 +59,57 @@ namespace Penguin.Web.Errors.Middleware
             }
         }
 
-        const long ChunkSize = 1_000_000;
+        public async Task Invoke(HttpContext context)
+        {
+            if (context is null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
+            string requestPath = context.Request.Path.Value.Split('?')[0];
+
+            string root = context.RequestServices.GetService<FileService>()?.GetUserFilesRoot() ?? Path.Combine(Directory.GetCurrentDirectory(), "Files");
+
+            string filePath = Path.Combine(root, requestPath.Trim('/')).Replace("/", "\\");
+
+            DatabaseFileRepository databaseFileRepository = context.RequestServices.GetService<DatabaseFileRepository>();
+
+            bool Exists = true;
+            DatabaseFile found = null;
+
+            if (found is null && ExistingFiles != null && !ExistingFiles.TryGetValue(filePath, out Exists))
+            {
+                found = databaseFileRepository.GetByFullName(filePath);
+
+                Exists = found != null && !found.IsDeleted;
+
+                ExistingFiles.TryAdd(filePath, Exists);
+            }
+
+            if (Exists && found is null)
+            {
+                found = databaseFileRepository.GetByFullName(filePath);
+            }
+
+            if (found != null)
+            {
+                await ReturnFile(context, found);
+                return;
+            }
+            else
+            {
+                await this._next(context).ConfigureAwait(false);
+            }
+        }
 
         private static async Task RangeDownload(string fullpath, HttpContext context)
         {
             long size, start, end, length;
             using (StreamReader reader = new StreamReader(fullpath))
             {
-
                 size = reader.BaseStream.Length;
                 start = 0;
-                end = Math.Min(size - 1, ChunkSize);
+                end = Math.Min(size - 1, CHUNK_SIZE);
                 length = end - start + 1;
 
                 // Now that we've gotten so far without errors we send the accept range header
@@ -79,7 +129,7 @@ namespace Penguin.Web.Errors.Middleware
                 // multipart/byteranges
                 // http://www.w3.org/Protocols/rfc2616/rfc2616-sec19.html#sec19.2
 
-                if (!String.IsNullOrEmpty(context.Request.Headers["Range"]))
+                if (!string.IsNullOrEmpty(context.Request.Headers["Range"]))
                 {
                     long anotherStart = start;
                     long anotherEnd = end;
@@ -113,10 +163,11 @@ namespace Penguin.Web.Errors.Middleware
 
                         if (!string.IsNullOrWhiteSpace(arr_split[1]))
                         {
-                            anotherEnd = (arr_split.Length > 1 && Int64.TryParse(arr_split[1], out temp)) ? Convert.ToInt64(arr_split[1]) : end;
-                        } else
+                            anotherEnd = (arr_split.Length > 1 && long.TryParse(arr_split[1], out temp)) ? Convert.ToInt64(arr_split[1]) : end;
+                        }
+                        else
                         {
-                            anotherEnd = Math.Min(anotherStart + ChunkSize, size);
+                            anotherEnd = Math.Min(anotherStart + CHUNK_SIZE, size);
                         }
                     }
                     /* Check the range and make sure it's treated according to the specs.
@@ -127,7 +178,6 @@ namespace Penguin.Web.Errors.Middleware
                     // Validate the requested range and return an error if it's not correct.
                     if (anotherStart > anotherEnd || anotherStart > size - 1 || anotherEnd >= size)
                     {
-
                         context.Response.Headers.Add("Content-Range", "bytes " + start + "-" + end + "/" + size);
                         context.Response.StatusCode = (int)HttpStatusCode.RequestedRangeNotSatisfiable;
                         return;
@@ -154,48 +204,6 @@ namespace Penguin.Web.Errors.Middleware
             // Start buffered download
             await context.Response.Body.WriteAsync(response, 0, response.Length);
             await context.Response.Body.FlushAsync();
-
-        }
-
-
-        public async Task Invoke(HttpContext context)
-        {
-            string requestPath = context.Request.Path.Value.Split('?')[0];
-
-            string root = context.RequestServices.GetService<FileService>()?.GetUserFilesRoot() ?? Path.Combine(Directory.GetCurrentDirectory(), "Files");
-
-            string filePath = Path.Combine(root, requestPath.Trim('/')).Replace("/", "\\");
-
-            DatabaseFileRepository databaseFileRepository = context.RequestServices.GetService<DatabaseFileRepository>();
-
-            bool Exists = true;
-            DatabaseFile found = null;
-
-            if (found is null && ExistingFiles != null && !ExistingFiles.TryGetValue(filePath, out Exists))
-            {
-                found = databaseFileRepository.GetByFullName(filePath);
-
-                Exists = found != null && !found.IsDeleted;
-
-                ExistingFiles.TryAdd(filePath, Exists);
-            }
-
-
-
-            if (Exists && found is null)
-            {
-                found = databaseFileRepository.GetByFullName(filePath);
-            }
-
-            if (found != null)
-            {
-                await ReturnFile(context, found);
-                return;
-            }
-            else
-            {
-                await this._next(context).ConfigureAwait(false);
-            }
         }
 
         private static async Task ReturnFile(HttpContext context, DatabaseFile databaseFile)
@@ -206,7 +214,7 @@ namespace Penguin.Web.Errors.Middleware
             context.Response.StatusCode = (int)HttpStatusCode.OK;
             context.Response.ContentType = MimeType;
 
-            if (String.IsNullOrEmpty(context.Request.Headers["Range"]))
+            if (string.IsNullOrEmpty(context.Request.Headers["Range"]))
             {
                 byte[] fileData;
 
@@ -226,7 +234,8 @@ namespace Penguin.Web.Errors.Middleware
                     await stream.WriteAsync(fileData, 0, fileData.Length);
                     await stream.FlushAsync();
                 }
-            } else
+            }
+            else
             {
                 await RangeDownload(databaseFile.FullName, context);
             }
