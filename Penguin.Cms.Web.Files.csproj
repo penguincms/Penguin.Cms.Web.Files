@@ -14,8 +14,8 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.1" />
     <PackageReference Include="Penguin.Email.Templating.Abstractions" Version="1.0.1-T9RVMZA" />
     <PackageReference Include="Penguin.Messaging.Application" Version="2.1.1-T9RVMZA" />
-    <PackageReference Include="Penguin.Web.Abstractions" Version="1.0.1-T9RVMZA" />
     <PackageReference Include="Penguin.Web.Data" Version="2.0.1-T9RVMZA" />
     <PackageReference Include="Penguin.Cms.Files.Repositories" Version="1.0.1-T9UEEAT" />
+    <PackageReference Include="Penguin.Web.Abstractions" Version="1.0.1-T9UEQUJ" />
   </ItemGroup>
 </Project>
