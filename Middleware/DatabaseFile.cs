@@ -17,7 +17,6 @@ using System.Threading.Tasks;
 namespace Penguin.Web.Errors.Middleware
 {
     //https://exceptionnotfound.net/using-middleware-to-log-requests-and-responses-in-asp-net-core/
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1307:Specify StringComparison", Justification = "<Pending>")]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1305:Specify IFormatProvider", Justification = "<Pending>")]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2007:Consider calling ConfigureAwait on the awaited task", Justification = "<Pending>")]
 #pragma warning disable CS0618 // Type or member is obsolete
