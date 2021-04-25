@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageProjectUrl>https://github.com/penguincms/Penguin.Cms.Web.Files</PackageProjectUrl>
-    <Version>5.0.1</Version>
+    <Version>5.0.5</Version>
     <Description>Not Available</Description>
     <AssemblyName>Penguin.Cms.Web.Files</AssemblyName>
     <RootNamespace>Penguin.Cms.Web.Files</RootNamespace>
@@ -12,10 +12,10 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.1" />
-    <PackageReference Include="Penguin.Web.Data" Version="5.0.2-TADRIFB" />
-    <PackageReference Include="Penguin.Email.Templating.Abstractions" Version="5.0.2-TADRIFB" />
-    <PackageReference Include="Penguin.Web.Abstractions" Version="5.0.2-TADRIFB" />
-    <PackageReference Include="Penguin.Messaging.Application" Version="5.0.2-TADRIFB" />
-    <PackageReference Include="Penguin.Cms.Files.Repositories" Version="5.0.2-TADRIFB" />
+    <PackageReference Include="Penguin.Web.Data" Version="5.0.4" />
+    <PackageReference Include="Penguin.Email.Templating.Abstractions" Version="5.0.4" />
+    <PackageReference Include="Penguin.Web.Abstractions" Version="5.0.4" />
+    <PackageReference Include="Penguin.Messaging.Application" Version="5.0.4" />
+    <PackageReference Include="Penguin.Cms.Files.Repositories" Version="5.0.4" />
   </ItemGroup>
 </Project>
