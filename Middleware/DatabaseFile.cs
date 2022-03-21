@@ -34,10 +34,7 @@ namespace Penguin.Web.Errors.Middleware
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>")]
-        public static void AcceptMessage(Penguin.Messaging.Application.Messages.Startup message)
-        {
-            ExistingFiles = new ConcurrentDictionary<string, bool>();
-        }
+        public static void AcceptMessage(Penguin.Messaging.Application.Messages.Startup message) => ExistingFiles = new ConcurrentDictionary<string, bool>();
 
         public static void AcceptMessage(Updating<DatabaseFile> message)
         {
