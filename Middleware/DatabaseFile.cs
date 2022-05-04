@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Penguin.Cms.Files;
 using Penguin.Cms.Files.Repositories;
-using Penguin.Extensions.Strings;
+using Penguin.Extensions.String;
 using Penguin.Files.Services;
 using Penguin.Messaging.Abstractions.Interfaces;
 using Penguin.Messaging.Persistence.Messages;
@@ -14,7 +14,7 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace Penguin.Web.Errors.Middleware
+namespace Penguin.Cms.Web.Files.Middleware
 {
     //https://exceptionnotfound.net/using-middleware-to-log-requests-and-responses-in-asp-net-core/
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1305:Specify IFormatProvider", Justification = "<Pending>")]
@@ -34,7 +34,10 @@ namespace Penguin.Web.Errors.Middleware
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>")]
-        public static void AcceptMessage(Penguin.Messaging.Application.Messages.Startup message) => ExistingFiles = new ConcurrentDictionary<string, bool>();
+        public static void AcceptMessage(Messaging.Application.Messages.Startup message)
+        {
+            ExistingFiles = new ConcurrentDictionary<string, bool>();
+        }
 
         public static void AcceptMessage(Updating<DatabaseFile> message)
         {
@@ -49,7 +52,7 @@ namespace Penguin.Web.Errors.Middleware
             }
             else
             {
-                ExistingFiles.TryAdd(message.Target.FilePath, !message.Target.IsDeleted);
+                _ = ExistingFiles.TryAdd(message.Target.FilePath, !message.Target.IsDeleted);
             }
         }
 
@@ -77,7 +80,7 @@ namespace Penguin.Web.Errors.Middleware
 
                 Exists = found != null && !found.IsDeleted;
 
-                ExistingFiles.TryAdd(filePath, Exists);
+                _ = ExistingFiles.TryAdd(filePath, Exists);
             }
 
             if (Exists && found is null)
@@ -157,7 +160,7 @@ namespace Penguin.Web.Errors.Middleware
 
                         if (!string.IsNullOrWhiteSpace(arr_split[1]))
                         {
-                            anotherEnd = (arr_split.Length > 1 && long.TryParse(arr_split[1], out temp)) ? Convert.ToInt64(arr_split[1]) : end;
+                            anotherEnd = arr_split.Length > 1 && long.TryParse(arr_split[1], out temp) ? Convert.ToInt64(arr_split[1]) : end;
                         }
                         else
                         {
@@ -168,7 +171,7 @@ namespace Penguin.Web.Errors.Middleware
                      * http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html
                      */
                     // End bytes can not be larger than $end.
-                    anotherEnd = (anotherEnd > size - 1) ? size - 1 : anotherEnd;
+                    anotherEnd = anotherEnd > size - 1 ? size - 1 : anotherEnd;
                     // Validate the requested range and return an error if it's not correct.
                     if (anotherStart > anotherEnd || anotherStart > size - 1 || anotherEnd >= size)
                     {
@@ -191,8 +194,8 @@ namespace Penguin.Web.Errors.Middleware
             byte[] response = new byte[length];
             using (BinaryReader reader = new BinaryReader(new FileStream(fullpath, FileMode.Open)))
             {
-                reader.BaseStream.Seek(start, SeekOrigin.Begin);
-                reader.Read(response, 0, (int)length);
+                _ = reader.BaseStream.Seek(start, SeekOrigin.Begin);
+                _ = reader.Read(response, 0, (int)length);
             }
 
             // Start buffered download
