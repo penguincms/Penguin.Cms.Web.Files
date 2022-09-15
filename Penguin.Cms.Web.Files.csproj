@@ -12,10 +12,10 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.1" />
-    <PackageReference Include="Penguin.Web.Data" Version="5.0.6-TB0E36F" />
-    <PackageReference Include="Penguin.Email.Templating.Abstractions" Version="5.0.6-TB0E36F" />
-    <PackageReference Include="Penguin.Web.Abstractions" Version="5.0.6-TB0E36F" />
-    <PackageReference Include="Penguin.Messaging.Application" Version="5.0.6-TB0E36F" />
-    <PackageReference Include="Penguin.Cms.Files.Repositories" Version="5.0.6-TB0E36F" />
+    <PackageReference Include="Penguin.Web.Data" Version="5.0.6-TB1ZEZV" />
+    <PackageReference Include="Penguin.Email.Templating.Abstractions" Version="5.0.6-TB1ZEZV" />
+    <PackageReference Include="Penguin.Web.Abstractions" Version="5.0.6-TB1ZEZV" />
+    <PackageReference Include="Penguin.Messaging.Application" Version="5.0.6-TB3XO8Q" />
+    <PackageReference Include="Penguin.Cms.Files.Repositories" Version="5.0.6-TB3XO8Q" />
   </ItemGroup>
 </Project>
