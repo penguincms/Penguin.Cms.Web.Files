@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="Penguin.Projects.Shared\Penguin.Projects.Shared.csproj" />
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netstandard2.1;net5.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.1;net7.0</TargetFrameworks>
     <PackageProjectUrl>https://github.com/PenguinCms/Penguin.Cms.Web.Files</PackageProjectUrl>
     <Version>5.0.5</Version>
     <Description>Not Available</Description>
