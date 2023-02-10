@@ -18,9 +18,8 @@ namespace Penguin.Cms.Web.Files.Middleware
 {
     //https://exceptionnotfound.net/using-middleware-to-log-requests-and-responses-in-asp-net-core/
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1305:Specify IFormatProvider", Justification = "<Pending>")]
-#pragma warning disable CS0618 // Type or member is obsolete
+    [Obsolete]
     public class DatabaseFileServer : IPenguinMiddleware, IMessageHandler
-#pragma warning restore CS0618 // Type or member is obsolete
     {
         private const long CHUNK_SIZE = 1_000_000;
         private static ConcurrentDictionary<string, bool> ExistingFiles;
@@ -30,7 +29,7 @@ namespace Penguin.Cms.Web.Files.Middleware
         //TODO: Learn what this is
         public DatabaseFileServer(RequestDelegate next)
         {
-            this._next = next;
+            _next = next;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>")]
@@ -90,19 +89,19 @@ namespace Penguin.Cms.Web.Files.Middleware
 
             if (found != null)
             {
-                await ReturnFile(context, found);
+                await ReturnFile(context, found).ConfigureAwait(false);
                 return;
             }
             else
             {
-                await this._next(context).ConfigureAwait(false);
+                await _next(context).ConfigureAwait(false);
             }
         }
 
         private static async Task RangeDownload(string fullpath, HttpContext context)
         {
             long size, start, end, length;
-            using (StreamReader reader = new StreamReader(fullpath))
+            using (StreamReader reader = new(fullpath))
             {
                 size = reader.BaseStream.Length;
                 start = 0;
@@ -150,22 +149,16 @@ namespace Penguin.Cms.Web.Files.Middleware
                     if (range.StartsWith("-"))
                     {
                         // The n-number of the last bytes is requested
-                        anotherStart = size - Convert.ToInt64(range.Substring(1));
+                        anotherStart = size - Convert.ToInt64(range[1..]);
                     }
                     else
                     {
                         arr_split = range.Split('-');
                         anotherStart = Convert.ToInt64(arr_split[0]);
-                        long temp = 0;
 
-                        if (!string.IsNullOrWhiteSpace(arr_split[1]))
-                        {
-                            anotherEnd = arr_split.Length > 1 && long.TryParse(arr_split[1], out temp) ? Convert.ToInt64(arr_split[1]) : end;
-                        }
-                        else
-                        {
-                            anotherEnd = Math.Min(anotherStart + CHUNK_SIZE, size);
-                        }
+                        anotherEnd = !string.IsNullOrWhiteSpace(arr_split[1])
+                            ? arr_split.Length > 1 && long.TryParse(arr_split[1], out long temp) ? Convert.ToInt64(arr_split[1]) : end
+                            : Math.Min(anotherStart + CHUNK_SIZE, size);
                     }
                     /* Check the range and make sure it's treated according to the specs.
                      * http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html
@@ -192,15 +185,15 @@ namespace Penguin.Cms.Web.Files.Middleware
             context.Response.Headers.Add("Content-Length", length.ToString());
 
             byte[] response = new byte[length];
-            using (BinaryReader reader = new BinaryReader(new FileStream(fullpath, FileMode.Open)))
+            using (BinaryReader reader = new(new FileStream(fullpath, FileMode.Open)))
             {
                 _ = reader.BaseStream.Seek(start, SeekOrigin.Begin);
                 _ = reader.Read(response, 0, (int)length);
             }
 
             // Start buffered download
-            await context.Response.Body.WriteAsync(response, 0, response.Length);
-            await context.Response.Body.FlushAsync();
+            await context.Response.Body.WriteAsync(response).ConfigureAwait(false);
+            await context.Response.Body.FlushAsync().ConfigureAwait(false);
         }
 
         private static async Task ReturnFile(HttpContext context, DatabaseFile databaseFile)
@@ -213,28 +206,16 @@ namespace Penguin.Cms.Web.Files.Middleware
 
             if (string.IsNullOrEmpty(context.Request.Headers["Range"]))
             {
-                byte[] fileData;
-
-                if (databaseFile.Data.Length != 0)
-                {
-                    fileData = databaseFile.Data;
-                }
-                else
-                {
-                    fileData = File.ReadAllBytes(databaseFile.FullName);
-                }
-
+                byte[] fileData = databaseFile.Data.Length != 0 ? databaseFile.Data : File.ReadAllBytes(databaseFile.FullName);
                 context.Response.ContentLength = fileData.Length;
 
-                using (Stream stream = context.Response.Body)
-                {
-                    await stream.WriteAsync(fileData, 0, fileData.Length);
-                    await stream.FlushAsync();
-                }
+                using Stream stream = context.Response.Body;
+                await stream.WriteAsync(fileData).ConfigureAwait(false);
+                await stream.FlushAsync().ConfigureAwait(false);
             }
             else
             {
-                await RangeDownload(databaseFile.FullName, context);
+                await RangeDownload(databaseFile.FullName, context).ConfigureAwait(false);
             }
         }
     }
