@@ -27,7 +27,6 @@
     <ProjectReference Include="..\Penguin.Extensions.String\Penguin.Extensions.String.Local.csproj" />
     <ProjectReference Include="..\Penguin.Files\Penguin.Files.Local.csproj" />
     <ProjectReference Include="..\Penguin.Files.Abstractions\Penguin.Files.Abstractions.Local.csproj" />
-    <ProjectReference Include="..\Penguin.FileStreams\Penguin.FileStreams.Local.csproj" />
     <ProjectReference Include="..\Penguin.Messaging.Abstractions\Penguin.Messaging.Abstractions.Local.csproj" />
     <ProjectReference Include="..\Penguin.Messaging.Application\Penguin.Messaging.Application.Local.csproj" />
     <ProjectReference Include="..\Penguin.Messaging.Core\Penguin.Messaging.Core.Local.csproj" />
